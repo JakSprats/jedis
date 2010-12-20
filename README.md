@@ -1,10 +1,10 @@
-# Jedis
+# Jedis for AlchemyDB
 
-Jedis is a blazingly small and sane [Redis](http://github.com/antirez/redis "Redis") java client.
+Jedis is a blazingly small and sane [Redis](http://github.com/antirez/redis "Redis") java client, this fork has support for [AlchemyDB](http://code.google.com/p/alchemydatabase/ "AlchemyDB").
 
 Jedis was conceived to be EASY to use.
 
-Jedis is fully compatible with redis 2.0.0.
+Jedis is fully compatible with redis 2.0.0 and AlchemyDB 0.1.5.
 
 ## I want to persist my objects in Redis. How can I do it?
 You should definitely check [JOhm](http://github.com/xetorthio/johm "JOhm")!!!
@@ -23,6 +23,7 @@ Join the mailing-list at [http://groups.google.com/group/jedis_redis](http://gro
 ## Ok.. so what can I do with Jedis?
 All of the following redis features are supported:
 
+- Alchemy Commands (createTable, dropTable, desc, dump, createIndex, dropIndex, insert, select, scanSelect, update, sqlDelete, lua)
 - Sorting
 - Connection handling
 - Commands operating on all the kind of values
@@ -77,7 +78,7 @@ To run the tests:
 
 - Use the latest redis master branch.
 
-- Run 2 instances of redis using conf files in conf folder. For the tests we use 2 redis servers, one on default port (6379) and the other one on (6380). Both have authentication enabled with default password (foobared). This way we can test both sharding and auth command.
+- Run 2 instances of AlchemyDB (./redisql-server) using conf files in conf folder. For the tests we use 2 redis servers, one on default port (6379) and the other one on (6380). Both have authentication enabled with default password (foobared). This way we can test both sharding and auth command.
 
 Thanks for helping!
 

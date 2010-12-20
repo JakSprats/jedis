@@ -434,4 +434,91 @@ public abstract class ShardedJedisPipeline {
     }
 
     public abstract void execute();
+
+    /* ALCHEMY DATABASE START */
+    protected void createTable(String tablename, String column_definitions) {
+        Client c = jedis.getShard(tablename).getClient();
+        c.createTable(tablename, column_definitions);
+        results.add(new FutureResult(c));
+    }
+    protected void dropTable(String tablename) {
+        Client c = jedis.getShard(tablename).getClient();
+        c.dropTable(tablename);
+        results.add(new FutureResult(c));
+    }
+    protected void desc(String tablename) {
+        Client c = jedis.getShard(tablename).getClient();
+        c.desc(tablename);
+        results.add(new FutureResult(c));
+    }
+    protected void dump(String tablename) {
+        Client c = jedis.getShard(tablename).getClient();
+        c.dump(tablename);
+        results.add(new FutureResult(c));
+    }
+    protected void dumpToMysql(String tablename, String mysql_tablename) {
+        Client c = jedis.getShard(tablename).getClient();
+        c.dumpToMysql(tablename, mysql_tablename);
+        results.add(new FutureResult(c));
+    }
+    protected void dumpToFile(String tablename, String filename) {
+        Client c = jedis.getShard(tablename).getClient();
+        c.dumpToFile(tablename, filename);
+        results.add(new FutureResult(c));
+    }
+
+    protected void createIndex(String indexname,
+                               String tablename,
+                               String column) {
+        Client c = jedis.getShard(indexname).getClient();
+        c.createIndex(indexname, tablename, column);
+        results.add(new FutureResult(c));
+    }
+    protected void dropIndex(String indexname) {
+        Client c = jedis.getShard(indexname).getClient();
+        c.dropIndex(indexname);
+        results.add(new FutureResult(c));
+    }
+
+    protected void insert(String tablename, String values_list) {
+        Client c = jedis.getShard(tablename).getClient();
+        c.insert(tablename, values_list);
+        results.add(new FutureResult(c));
+    }
+    protected void insert_ret_size(String tablename, String values_list) {
+        Client c = jedis.getShard(tablename).getClient();
+        c.insert_ret_size(tablename, values_list);
+        results.add(new FutureResult(c));
+    }
+    protected void select(String column_list,
+                          String tablename,
+                          String where_clause) {
+        Client c = jedis.getShard(tablename).getClient();
+        c.select(column_list, tablename, where_clause);
+        results.add(new FutureResult(c));
+    }
+    protected void scanSelect(String column_list,
+                              String tablename,
+                              String where_clause) {
+        Client c = jedis.getShard(tablename).getClient();
+        c.scanSelect(column_list, tablename, where_clause);
+        results.add(new FutureResult(c));
+    }
+    protected void update(String tablename,
+                          String update_list,
+                          String where_clause) {
+        Client c = jedis.getShard(tablename).getClient();
+        c.update(tablename, update_list, where_clause);
+        results.add(new FutureResult(c));
+    }
+    protected void sqlDelete(String tablename,
+                             String where_clause) {
+        Client c = jedis.getShard(tablename).getClient();
+        c.sqlDelete(tablename, where_clause);
+        results.add(new FutureResult(c));
+    }
+
+    /* NO LUA COMMAND for sharded actions */
+
+    /* ALCHEMY DATABASE END */
 }

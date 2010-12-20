@@ -230,4 +230,37 @@ public interface Commands {
     public void configGet(final String pattern);
 
     public void configResetStat();
+
+    /* ALCHEMY DATABASE START */
+    public void createTable(final String tablename,
+                            final String column_definitions);
+    public void dropTable(final String tablename);
+    public void desc(final String tablename);
+    public void dump(final String tablename);
+    public void dumpToMysql(final String tablename,
+                            final String mysql_tablename);
+    public void dumpToFile(final String tablename, final String filename);
+
+    public void createIndex(final String indexname,
+                            final String tablename,
+                            final String column);
+    public void dropIndex(final String indexname);
+
+    public void insert(final String tablename, final String values_list);
+    public void insert_ret_size(final String tablename,
+                                final String values_list);
+    public void select(final String column_list,
+                       final String tablename,
+                       final String where_clause);
+    public void scanSelect(final String column_list,
+                           final String tablename,
+                           final String where_clause);
+    public void update(final String tablename,
+                       final String update_list,
+                       final String where_clause);
+    public void sqlDelete(final String tablename,
+                          final String where_clause);
+
+    public void lua(final String command);
+    /* ALCHEMY DATABASE END */
 }

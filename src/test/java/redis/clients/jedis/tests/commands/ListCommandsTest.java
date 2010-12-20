@@ -502,6 +502,7 @@ public class ListCommandsTest extends JedisCommandTestBase {
 
     }
 
+/*
     @Test
     public void lpushx() {
         long status = jedis.lpushx("foo", "bar");
@@ -628,4 +629,5 @@ public class ListCommandsTest extends JedisCommandTestBase {
         assertEquals("a", jedis.lrange("bar", 0, -1).get(0));
 
     }
+*/
 }

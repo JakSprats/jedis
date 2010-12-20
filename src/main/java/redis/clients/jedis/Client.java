@@ -514,4 +514,80 @@ public class Client extends BinaryClient implements Commands {
     public void getbit(String key, int offset) {
         getbit(SafeEncoder.encode(key), offset);
     }
+
+    /* ALCHEMY DATABASE START */
+    public void createTable(final String tablename,
+                            final String column_definitions) {
+        createTable(SafeEncoder.encode(tablename),
+                    SafeEncoder.encode(column_definitions));
+    }
+    public void dropTable(final String tablename) {
+        dropTable(SafeEncoder.encode(tablename));
+    }
+    public void desc(final String tablename) {
+        desc(SafeEncoder.encode(tablename));
+    }
+    public void dump(final String tablename) {
+        dump(SafeEncoder.encode(tablename));
+    }
+    public void dumpToMysql(final String tablename,
+                            final String mysql_tablename) {
+        dumpToMysql(SafeEncoder.encode(tablename),
+                    SafeEncoder.encode(mysql_tablename));
+    }
+    public void dumpToFile(final String tablename,
+                           final String filename) {
+        dumpToFile(SafeEncoder.encode(tablename), SafeEncoder.encode(filename));
+    }
+
+    public void createIndex(final String indexname,
+                            final String tablename,
+                            final String column) {
+        createIndex(SafeEncoder.encode(indexname),
+                    SafeEncoder.encode(tablename),
+                    SafeEncoder.encode(column));
+    }
+    public void dropIndex(final String indexname) {
+        dropIndex(SafeEncoder.encode(indexname));
+    }
+
+    public void insert(final String tablename, final String values_list) {
+        insert(SafeEncoder.encode(tablename), SafeEncoder.encode(values_list));
+    }
+    public void insert_ret_size(final String tablename,
+                                final String values_list) {
+        insert_ret_size(SafeEncoder.encode(tablename),
+                        SafeEncoder.encode(values_list));
+    }
+    public void select(final String column_list,
+                       final String tablename,
+                       final String where_clause) {
+        select(SafeEncoder.encode(column_list),
+               SafeEncoder.encode(tablename),
+               SafeEncoder.encode(where_clause));
+    }
+    public void scanSelect(final String column_list,
+                           final String tablename,
+                           final String where_clause) {
+        scanSelect(SafeEncoder.encode(column_list),
+                   SafeEncoder.encode(tablename),
+                   SafeEncoder.encode(where_clause));
+    }
+    public void update(final String tablename,
+                       final String update_list,
+                       final String where_clause) {
+        update(SafeEncoder.encode(tablename),
+               SafeEncoder.encode(update_list),
+               SafeEncoder.encode(where_clause));
+    }
+    public void sqlDelete(final String tablename,
+                          final String where_clause) {
+        sqlDelete(SafeEncoder.encode(tablename),
+                  SafeEncoder.encode(where_clause));
+    }
+
+    public void lua(final String command) {
+        lua(SafeEncoder.encode(command));
+    }
+    /* ALCHEMY DATABASE END */
 }

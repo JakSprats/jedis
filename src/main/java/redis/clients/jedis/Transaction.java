@@ -389,4 +389,82 @@ public class Transaction extends BinaryTransaction {
         client.sort(key, sortingParameters);
         return client.getStatusCodeReply();
     }
+
+    /* ALCHEMY DATABASE START */
+    public String createTable(final String tablename, 
+                              final String column_definitions) {
+        client.createTable(tablename, column_definitions);
+        return client.getStatusCodeReply();
+    }
+    public String dropTable(final String tablename) {
+        client.dropTable(tablename);
+        return client.getStatusCodeReply();
+    }
+    public String desc(final String tablename) {
+        client.desc(tablename);
+        return client.getStatusCodeReply();
+    }
+    public String dump(final String tablename) {
+        client.dump(tablename);
+        return client.getStatusCodeReply();
+    }
+    public String dumpToMysql(final String tablename,
+                              final String mysql_tablename) {
+        client.dumpToMysql(tablename, mysql_tablename);
+        return client.getStatusCodeReply();
+    }
+    public String dumpToFile(final String tablename, final String filename) {
+        client.dumpToFile(tablename, filename);
+        return client.getStatusCodeReply();
+    }
+
+    public String createIndex(final String indexname, 
+                              final String tablename, 
+                              final String column) {
+        client.createIndex(indexname, tablename, column);
+        return client.getStatusCodeReply();
+    }
+    public String dropIndex(final String indexname) {
+        client.dropIndex(indexname);
+        return client.getStatusCodeReply();
+    }
+
+    public String insert(final String tablename, final String values_list) {
+        client.insert(tablename, values_list);
+        return client.getStatusCodeReply();
+    }
+    public String insert_ret_size(final String tablename,
+                                  final String values_list) {
+        client.insert_ret_size(tablename, values_list);
+        return client.getStatusCodeReply();
+    }
+    public String select(String column_list,
+                         String tablename,
+                         String where_clause) {
+        client.select(column_list, tablename, where_clause);
+        return client.getStatusCodeReply();
+    }
+    public String scanSelect(String column_list,
+                             String tablename,
+                             String where_clause) {
+        client.scanSelect(column_list, tablename, where_clause);
+        return client.getStatusCodeReply();
+    }
+    public String update(String tablename,
+                         String update_list,
+                         String where_clause) {
+        client.update(tablename, update_list, where_clause);
+        return client.getStatusCodeReply();
+    }
+    public String sqlDelete(String tablename,
+                            String where_clause) {
+        client.sqlDelete(tablename, where_clause);
+        return client.getStatusCodeReply();
+    }
+
+    public String lua(final String command) {
+        client.lua(command);
+        return client.getStatusCodeReply();
+    }
+    /* ALCHEMY DATABASE END */
 }

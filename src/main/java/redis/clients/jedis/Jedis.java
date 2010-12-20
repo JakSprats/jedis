@@ -2620,4 +2620,99 @@ public class Jedis extends BinaryJedis implements JedisCommands {
         client.getbit(key, offset);
         return client.getIntegerReply();
     }
+
+    /* ALCHEMY DATABASE START */
+    public String createTable(final String tablename,
+                              final String column_definitions) {
+        runChecks();
+        client.createTable(tablename, column_definitions);
+        return client.getStatusCodeReply();
+    }
+    public Long dropTable(final String tablename) {
+        runChecks();
+        client.dropTable(tablename);
+        return client.getIntegerReply();
+    }
+    public List<String> desc(final String tablename) {
+        runChecks();
+        client.desc(tablename);
+        return client.getMultiBulkReply();
+    }
+    public List<String> dump(final String tablename) {
+        runChecks();
+        client.dump(tablename);
+        return client.getMultiBulkReply();
+    }
+    public List<String> dumpToMysql(final String tablename,
+                              final String mysql_tablename) {
+        runChecks();
+        client.dumpToMysql(tablename, mysql_tablename);
+        return client.getMultiBulkReply();
+    }
+    public List<String> dumpToFile(final String tablename,
+                                   final String filename) {
+        runChecks();
+        client.dumpToFile(tablename, filename);
+        return client.getMultiBulkReply();
+    }
+
+    public String createIndex(final String indexname,
+                              final String tablename,
+                              final String column) {
+        runChecks();
+        client.createIndex(indexname, tablename, column);
+        return client.getStatusCodeReply();
+    }
+
+    public Long dropIndex(final String indexname) {
+        runChecks();
+        client.dropIndex(indexname);
+        return client.getIntegerReply();
+    }
+
+    public String insert(final String tablename, final String values_list) {
+        runChecks();
+        client.insert(tablename, values_list);
+        return client.getStatusCodeReply();
+    }
+    public String insert_ret_size(final String tablename,
+                                  final String values_list) {
+        runChecks();
+        client.insert_ret_size(tablename, values_list);
+        return client.getBulkReply();
+    }
+    public List<String> select(final String column_list,
+                               final String tablename,
+                               final String where_clause) {
+        runChecks();
+        client.select(column_list, tablename, where_clause);
+        return client.getMultiBulkReply();
+    }
+    public List<String> scanSelect(final String column_list,
+                                   final String tablename,
+                                   final String where_clause) {
+        runChecks();
+        client.scanSelect(column_list, tablename, where_clause);
+        return client.getMultiBulkReply();
+    }
+    public Long update(final String tablename,
+                       final String update_list,
+                       final String where_clause) {
+        runChecks();
+        client.update(tablename, update_list, where_clause);
+        return client.getIntegerReply();
+    }
+    public Long sqlDelete(final String tablename,
+                          final String where_clause) {
+        runChecks();
+        client.sqlDelete(tablename, where_clause);
+        return client.getIntegerReply();
+    }
+
+    public List<String> lua(final String command) {
+        runChecks();
+        client.lua(command);
+        return client.getMultiBulkReply();
+    }
+    /* ALCHEMY DATABASE END */
 }

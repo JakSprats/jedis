@@ -143,4 +143,35 @@ public interface JedisCommands {
 
     Long linsert(String key, Client.LIST_POSITION where, String pivot,
             String value);
+
+    /* ALCHEMY DATABASE START */
+    String createTable(final String tablename, final String column_definitions);
+    Long   dropTable(final String tablename);
+    List<String> desc(final String tablename);
+    List<String> dump(final String tablename);
+    List<String> dumpToMysql(final String tablename,
+                             final String mysql_tablename);
+    List<String> dumpToFile(final String tablename, final String filename);
+
+    String createIndex(final String indexname,
+                       final String tablename,
+                       final String column_definitions);
+    Long   dropIndex(final String indexname);
+
+    String insert(final String tablename, final String values_list);
+    String insert_ret_size(final String tablename, final String values_list);
+    List<String> select(final String column_list,
+                        final String tablename,
+                        final String where_clause);
+    List<String> scanSelect(final String column_list,
+                            final String tablename,
+                            final String where_clause);
+    Long update(final String tablename,
+                final String update_list,
+                final String where_clause);
+    Long sqlDelete(final String tablename,
+                   final String where_clause);
+
+    List<String> lua(final String command);
+    /* ALCHEMY DATABASE END */
 }

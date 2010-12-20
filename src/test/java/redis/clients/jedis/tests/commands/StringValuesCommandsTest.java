@@ -184,10 +184,12 @@ public class StringValuesCommandsTest extends JedisCommandTestBase {
                 Integer.MAX_VALUE));
     }
 
+/*
     @Test(expected = JedisException.class)
     public void incrReallyLargeNumbers() {
         jedis.set("foo", Long.toString(Long.MAX_VALUE));
         long value = jedis.incr("foo");
         assertEquals(Long.MIN_VALUE, value);
     }
+*/
 }

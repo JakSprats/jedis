@@ -144,4 +144,32 @@ public interface BinaryJedisCommands {
     Long zremrangeByScore(byte[] key, double start, double end);
 
     Long linsert(byte[] key, LIST_POSITION where, byte[] pivot, byte[] value);
+
+    /* ALCHEMY DATABASE START */
+    String createTable(byte[] tablename, byte[] column_definitions);
+    Long   dropTable(byte[] tablename);
+    List<byte[]> desc(byte[] tablename);
+    List<byte[]> dump(byte[] tablename);
+    List<byte[]> dumpToMysql(byte[] tablename, byte[] mysql_tablename);
+    List<byte[]> dumpToFile( byte[] tablename, byte[] filename);
+
+    String createIndex(byte[] indexname, byte[] tablename, byte[] column);
+    Long   dropIndex(byte[] indexname);
+
+    String insert(byte[] tablename, byte[] values_list);
+    String insert_ret_size(byte[] tablename, byte[] values_list);
+    List<byte[]> select(byte[] column_list,
+                        byte[] tablename,
+                        byte[] where_clause);
+    List<byte[]> scanSelect(byte[] column_list,
+                            byte[] tablename,
+                            byte[] where_clause);
+    Long update(byte[] tablename,
+                byte[] update_list,
+                byte[] where_clause);
+    Long sqlDelete(byte[] tablename,
+                   byte[] where_clause);
+
+    List<byte[]> lua(byte[] command);
+    /* ALCHEMY DATABASE END */
 }

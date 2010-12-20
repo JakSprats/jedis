@@ -368,4 +368,81 @@ public class ShardedJedis extends BinaryShardedJedis implements JedisCommands {
         Jedis j = getShard(key);
         return j.linsert(key, where, pivot, value);
     }
+
+    /* ALCHEMY DATABASE START */
+    public String createTable(String tablename, String column_definitions) {
+        Jedis j = getShard(tablename);
+        return j.createTable(tablename, column_definitions);
+    }
+    public Long dropTable(String tablename) {
+        Jedis j = getShard(tablename);
+        return j.dropTable(tablename);
+    }
+    public List<String> desc(String tablename) {
+        Jedis j = getShard(tablename);
+        return j.desc(tablename);
+    }
+    public List<String> dump(String tablename) {
+        Jedis j = getShard(tablename);
+        return j.dump(tablename);
+    }
+    public List<String> dumpToMysql(String tablename, String mysql_tablename) {
+        Jedis j = getShard(tablename);
+        return j.dumpToMysql(tablename, mysql_tablename);
+    }
+    public List<String> dumpToFile(String tablename, String filename) {
+        Jedis j = getShard(tablename);
+        return j.dumpToFile(tablename, filename);
+    }
+
+    public String createIndex(String indexname,
+                              String tablename,
+                              String column) {
+        Jedis j = getShard(indexname);
+        return j.createIndex(indexname, tablename, column);
+    }
+    public Long dropIndex(String indexname) {
+        Jedis j = getShard(indexname);
+        return j.dropIndex(indexname);
+    }
+
+    public String insert(String tablename, String values_list) {
+        Jedis j = getShard(tablename);
+        return j.insert(tablename, values_list);
+    }
+    public String insert_ret_size(String tablename, String values_list) {
+        Jedis j = getShard(tablename);
+        return j.insert_ret_size(tablename, values_list);
+    }
+    public List<String> select(String column_list,
+                               String tablename,
+                               String where_clause) {
+        Jedis j = getShard(tablename);
+        return j.select(column_list, tablename, where_clause);
+    }
+    public List<String> scanSelect(String column_list,
+                                   String tablename,
+                                   String where_clause) {
+        Jedis j = getShard(tablename);
+        return j.scanSelect(column_list, tablename, where_clause);
+    }
+    public Long update(String tablename,
+                       String update_list,
+                       String where_clause) {
+        Jedis j = getShard(tablename);
+        return j.update(tablename, update_list, where_clause);
+    }
+    public Long sqlDelete(String tablename,
+                          String where_clause) {
+        Jedis j = getShard(tablename);
+        return j.sqlDelete(tablename, where_clause);
+    }
+
+    /* WARNING: sharding on COMMAND - WILL NOT WORK */
+    public List<String> lua(String command) {
+        Jedis j = getShard(command);
+        return j.lua(command);
+    }
+
+    /* ALCHEMY DATABASE END */
 }

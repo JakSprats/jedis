@@ -7,6 +7,18 @@ import static redis.clients.jedis.Protocol.Keyword.NO;
 import static redis.clients.jedis.Protocol.Keyword.ONE;
 import static redis.clients.jedis.Protocol.Keyword.STORE;
 import static redis.clients.jedis.Protocol.Keyword.WITHSCORES;
+/* ALCHEMY DATABASE */
+import static redis.clients.jedis.Protocol.Keyword.TABLE;
+import static redis.clients.jedis.Protocol.Keyword.INDEX;
+import static redis.clients.jedis.Protocol.Keyword.ON;
+import static redis.clients.jedis.Protocol.Keyword.TO;
+import static redis.clients.jedis.Protocol.Keyword.MYSQL;
+import static redis.clients.jedis.Protocol.Keyword.FILE;
+import static redis.clients.jedis.Protocol.Keyword.INTO;
+import static redis.clients.jedis.Protocol.Keyword.VALUES;
+import static redis.clients.jedis.Protocol.Keyword.FROM;
+import static redis.clients.jedis.Protocol.Keyword.WHERE;
+import static redis.clients.jedis.Protocol.Keyword.SET;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -644,4 +656,143 @@ public class BinaryClient extends Connection {
     public void getbit(byte[] key, int offset) {
         sendCommand(GETBIT, key, toByteArray(offset));
     }
+
+    /* ALCHEMY DATABASE START */
+    public void createTable(final byte[] tablename,
+                            final byte[] column_definitions) {
+        final List<byte[]> args = new ArrayList<byte[]>();
+        args.add(TABLE.raw);
+        args.add(tablename);
+        String s_cdefs   = new String(column_definitions);
+        String p_s_cdefs = "(" + s_cdefs + ")";
+        byte[] bArray    = p_s_cdefs.getBytes();
+        args.add(bArray);
+        sendCommand(CREATE, args.toArray(new byte[args.size()][]));
+    }
+    public void dropTable(final byte[] tablename) {
+        final List<byte[]> args = new ArrayList<byte[]>();
+        args.add(TABLE.raw);
+        args.add(tablename);
+        sendCommand(DROP, args.toArray(new byte[args.size()][]));
+    }
+
+    public void createIndex(final byte[] indexname,
+                            final byte[] tablename,
+                            final byte[] column) {
+        final List<byte[]> args = new ArrayList<byte[]>();
+        args.add(INDEX.raw);
+        args.add(indexname);
+        args.add(ON.raw);
+        args.add(tablename);
+        args.add(column);
+        sendCommand(CREATE, args.toArray(new byte[args.size()][]));
+    }
+    public void dropIndex(final byte[] indexname) {
+        final List<byte[]> args = new ArrayList<byte[]>();
+        args.add(INDEX.raw);
+        args.add(indexname);
+        sendCommand(DROP, args.toArray(new byte[args.size()][]));
+    }
+
+    public void desc(final byte[] tablename) {
+        sendCommand(DESC, tablename);
+    }
+    public void dump(final byte[] tablename) {
+        sendCommand(DUMP, tablename);
+    }
+    public void dumpToMysql(final byte[] tablename,
+                              final byte[] mysql_tablename) {
+        final List<byte[]> args = new ArrayList<byte[]>();
+        args.add(tablename);
+        args.add(TO.raw);
+        args.add(MYSQL.raw);
+        if (mysql_tablename.length != 0) {
+            args.add(mysql_tablename);
+        }
+        sendCommand(DUMP, args.toArray(new byte[args.size()][]));
+    }
+    public void dumpToFile(final byte[] tablename, final byte[] filename) {
+        final List<byte[]> args = new ArrayList<byte[]>();
+        args.add(tablename);
+        args.add(TO.raw);
+        args.add(FILE.raw);
+        args.add(filename);
+        sendCommand(DUMP, args.toArray(new byte[args.size()][]));
+    }
+
+    public void insert(final byte[] tablename, final byte[] values_list) {
+        final List<byte[]> args = new ArrayList<byte[]>();
+        args.add(INTO.raw);
+        args.add(tablename);
+        args.add(VALUES.raw);
+        String s_vlist   = new String(values_list);
+        String p_s_vilst = "(" + s_vlist + ")";
+        byte[] bArray    = p_s_vilst.getBytes();
+        args.add(bArray);
+        sendCommand(INSERT, args.toArray(new byte[args.size()][]));
+    }
+    public void insert_ret_size(final byte[] tablename,
+                                final byte[] values_list) {
+        final List<byte[]> args = new ArrayList<byte[]>();
+        args.add(INTO.raw);
+        args.add(tablename);
+        args.add(VALUES.raw);
+        String s_vlist   = new String(values_list);
+        String p_s_vilst = "(" + s_vlist + ")";
+        byte[] bArray    = p_s_vilst.getBytes();
+        args.add(bArray);
+        args.add(RETURN.raw);
+        args.add(SIZE.raw);
+        sendCommand(INSERT, args.toArray(new byte[args.size()][]));
+    }
+    public void select(final byte[] column_list,
+                       final byte[] tablename,
+                       final byte[] where_clause) {
+        final List<byte[]> args = new ArrayList<byte[]>();
+        args.add(column_list);
+        args.add(FROM.raw);
+        args.add(tablename);
+        args.add(WHERE.raw);
+        args.add(where_clause);
+        sendCommand(SELECT, args.toArray(new byte[args.size()][]));
+    }
+    public void scanSelect(final byte[] column_list,
+                           final byte[] tablename,
+                           final byte[] where_clause) {
+        final List<byte[]> args = new ArrayList<byte[]>();
+        args.add(column_list);
+        args.add(FROM.raw);
+        args.add(tablename);
+        if (where_clause.length != 0) {
+            args.add(WHERE.raw);
+            args.add(where_clause);
+        }
+        sendCommand(SCANSELECT, args.toArray(new byte[args.size()][]));
+    }
+    public void update(final byte[] tablename,
+                       final byte[] update_list,
+                       final byte[] where_clause) {
+        final List<byte[]> args = new ArrayList<byte[]>();
+        args.add(tablename);
+        args.add(SET.raw);
+        args.add(update_list);
+        args.add(WHERE.raw);
+        args.add(where_clause);
+        sendCommand(UPDATE, args.toArray(new byte[args.size()][]));
+    }
+    public void sqlDelete(final byte[] tablename,
+                          final byte[] where_clause) {
+        final List<byte[]> args = new ArrayList<byte[]>();
+        args.add(FROM.raw);
+        args.add(tablename);
+        args.add(WHERE.raw);
+        args.add(where_clause);
+        sendCommand(DELETE, args.toArray(new byte[args.size()][]));
+    }
+
+    public void lua(final byte[] command) {
+        sendCommand(LUA, command);
+    }
+    /* ALCHEMY DATABASE END */
+
 }

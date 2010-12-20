@@ -125,6 +125,7 @@ public class TransactionCommandsTest extends JedisCommandTestBase {
 
     }
 
+/*
     @Test
     public void watch() throws UnknownHostException, IOException {
         jedis.watch("mykey", "somekey");
@@ -194,6 +195,7 @@ public class TransactionCommandsTest extends JedisCommandTestBase {
         assertArrayEquals(Keyword.OK.name().getBytes(Protocol.CHARSET),
                 (byte[]) resp.get(0));
     }
+*/
 
     @Test(expected = JedisException.class)
     public void validateWhenInMulti() {

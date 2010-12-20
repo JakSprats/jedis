@@ -378,4 +378,82 @@ public class BinaryShardedJedis extends Sharded<Jedis, JedisShardInfo>
         shardedJedisPipeline.execute();
         return shardedJedisPipeline.getResults();
     }
+
+    /* ALCHEMY DATABASE START */
+    public String createTable(byte[] tablename, byte[] column_definitions) {
+        Jedis j = getShard(tablename);
+        return j.createTable(tablename, column_definitions);
+    }
+    public Long dropTable(byte[] tablename) {
+        Jedis j = getShard(tablename);
+        return j.dropTable(tablename);
+    }
+    public List<byte[]> desc(byte[] tablename) {
+        Jedis j = getShard(tablename);
+        return j.desc(tablename);
+    }
+    public List<byte[]> dump(byte[] tablename) {
+        Jedis j = getShard(tablename);
+        return j.dump(tablename);
+    }
+    public List<byte[]> dumpToMysql(byte[] tablename, byte[] mysql_tablename) {
+        Jedis j = getShard(tablename);
+        return j.dumpToMysql(tablename, mysql_tablename);
+    }
+    public List<byte[]> dumpToFile(byte[] tablename, byte[] filename) {
+        Jedis j = getShard(tablename);
+        return j.dumpToFile(tablename, filename);
+    }
+
+    public String createIndex(byte[] indexname,
+                              byte[] tablename,
+                              byte[] column) {
+        Jedis j = getShard(indexname);
+        return j.createIndex(indexname, tablename, column);
+    }
+    public Long dropIndex(byte[] indexname) {
+        Jedis j = getShard(indexname);
+        return j.dropIndex(indexname);
+    }
+
+    public String insert(byte[] tablename, byte[] values_list) {
+        Jedis j = getShard(tablename);
+        return j.insert(tablename, values_list);
+    }
+    public String insert_ret_size(byte[] tablename, byte[] values_list) {
+        Jedis j = getShard(tablename);
+        return j.insert_ret_size(tablename, values_list);
+    }
+    public List<byte[]> select(byte[] column_list,
+                               byte[] tablename,
+                               byte[] where_clause) {
+        Jedis j = getShard(tablename);
+        return j.select(column_list, tablename, where_clause);
+    }
+    public List<byte[]> scanSelect(byte[] column_list,
+                                   byte[] tablename,
+                                   byte[] where_clause) {
+        Jedis j = getShard(tablename);
+        return j.scanSelect(column_list, tablename, where_clause);
+    }
+    public Long update(byte[] tablename,
+                       byte[] update_list,
+                       byte[] where_clause) {
+        Jedis j = getShard(tablename);
+        return j.update(tablename, update_list, where_clause);
+    }
+    public Long sqlDelete(byte[] tablename,
+                          byte[] where_clause) {
+        Jedis j = getShard(tablename);
+        return j.sqlDelete(tablename, where_clause);
+    }
+
+    /* WARNING: sharding on COMMAND - WILL NOT WORK */
+    public List<byte[]> lua(byte[] command) {
+        Jedis j = getShard(command);
+        return j.lua(command);
+    }
+
+
+    /* ALCHEMY DATABASE END */
 }

@@ -438,4 +438,63 @@ public class Pipeline implements Commands {
     public void lastsave() {
         client.lastsave();
     }
+
+    /* ALCHEMY DATABASE START */
+    public void createTable(String tablename, String column_definitions) {
+        client.createTable(tablename, column_definitions);
+    }
+    public void dropTable(String tablename) {
+        client.dropTable(tablename);
+    }
+    public void desc(String tablename) {
+        client.desc(tablename);
+    }
+    public void dump(String tablename) {
+        client.dump(tablename);
+    }
+    public void dumpToMysql(String tablename, String mysql_tablename) {
+        client.dumpToMysql(tablename, mysql_tablename);
+    }
+    public void dumpToFile(String tablename, String filename) {
+        client.dumpToFile(tablename, filename);
+    }
+
+    public void createIndex(String indexname, String tablename, String column) {
+        client.createIndex(indexname, tablename, column);
+    }
+    public void dropIndex(String indexname) {
+        client.dropIndex(indexname);
+    }
+
+    public void insert(String tablename, String values_list) {
+        client.insert(tablename, values_list);
+    }
+    public void insert_ret_size(String tablename, String values_list) {
+        client.insert_ret_size(tablename, values_list);
+    }
+    public void select(String column_list,
+                       String tablename,
+                       String where_clause) {
+        client.select(column_list, tablename, where_clause);
+    }
+    public void scanSelect(String column_list,
+                           String tablename,
+                           String where_clause) {
+        client.scanSelect(column_list, tablename, where_clause);
+    }
+    public void update(String tablename,
+                       String update_list,
+                       String where_clause) {
+        client.update(tablename, update_list, where_clause);
+    }
+    public void sqlDelete(String tablename,
+                          String where_clause) {
+        client.sqlDelete(tablename, where_clause);
+    }
+
+    public void lua(String command) {
+        client.lua(command);
+    }
+
+    /* ALCHEMY DATABASE END */
 }
